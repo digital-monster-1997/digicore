@@ -1331,3 +1331,26 @@ func jsonStringToObject(s string, v interface{}) error {
 	data := []byte(s)
 	return json.Unmarshal(data, v)
 }
+
+func ToSliceStringMap(i interface{}) []map[string]interface{} {
+	v, _ := ToSliceStringMapE(i)
+	return v
+}
+
+// ToSliceStringMapE casts an empty interface to a []interface{}.
+func ToSliceStringMapE(i interface{}) ([]map[string]interface{}, error) {
+	var s = make([]map[string]interface{}, 0)
+
+	switch v := i.(type) {
+	case []interface{}:
+		for _, u := range v {
+			s = append(s, ToStringMap(u))
+		}
+		return s, nil
+	case []map[string]interface{}:
+		s = append(s, v...)
+		return s, nil
+	default:
+		return s, fmt.Errorf("Unable to Cast %#v of type %v to []map[string]interface{}", i, reflect.TypeOf(i))
+	}
+}
