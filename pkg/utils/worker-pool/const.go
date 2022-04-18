@@ -2,7 +2,7 @@ package worker_pool
 
 import (
 	"errors"
-	"math"
+	"runtime"
 	"time"
 )
 
@@ -17,7 +17,20 @@ var (
 	ErrPoolOverload = errors.New("too many goroutines blocked on submit or Nonblocking is set")
 	ErrTimeout = errors.New("operation timed out")
 	ErrInvalidPoolExpiry = errors.New("invalid expiry for pool")
+
 	ErrInvalidPreAllocSize = errors.New("can not set up a negative capacity under PreAlloc mode")
+	workerChanCap = func() int {
+		// Use blocking channel if GOMAXPROCS=1.
+		// This switches context from sender to receiver immediately,
+		// which results in higher performance (under go1.5 at least).
+		if runtime.GOMAXPROCS(0) == 1 {
+			return 0
+		}
+
+		// Use non-blocking workerChan if GOMAXPROCS>1,
+		// since otherwise the sender might be dragged down if the receiver is CPU-bound.
+		return 1
+	}()
 )
 
 const (
@@ -29,6 +42,5 @@ const (
 )
 
 const (
-	DefaultAntsPoolSize = math.MaxInt32
 	DefaultCleanIntervalTime = time.Second
 )
