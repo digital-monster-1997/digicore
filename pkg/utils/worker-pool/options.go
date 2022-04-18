@@ -42,28 +42,28 @@ func WithExpiryDuration(ExpiryDuration time.Duration) Option{
 }
 
 
-// WithPreAlloc indicates whether it should malloc for workers.
+// WithPreAlloc ...
 func WithPreAlloc(preAlloc bool) Option {
 	return func(opts *Options) {
 		opts.PreAlloc = preAlloc
 	}
 }
 
-// WithMaxBlockingTasks sets up the maximum number of goroutines that are blocked when it reaches the capacity of pool.
+// WithMaxBlockingTasks ...
 func WithMaxBlockingTasks(maxBlockingTasks int) Option {
 	return func(opts *Options) {
 		opts.MaxBlockingTasks = maxBlockingTasks
 	}
 }
 
-// WithNonblocking indicates that pool will return nil when there is no available workers.
+// WithNonblocking ...
 func WithNonblocking(nonblocking bool) Option {
 	return func(opts *Options) {
 		opts.NonBlocking = nonblocking
 	}
 }
 
-// WithPanicHandler sets up panic handler.
+// WithPanicHandler ...
 func WithPanicHandler(panicHandler func(interface{})) Option {
 	return func(opts *Options) {
 		opts.PanicHandler = panicHandler
