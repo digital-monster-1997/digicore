@@ -9,6 +9,9 @@ import (
 // ErrInvalidKey ...
 var ErrInvalidKey = errors.New("invalid key, maybe not exist in config")
 
+
+// TODO 新增可以使用 struct 的 TagName 來決定是否有預設，是不是必填，然後寫回 config 的功能
+
 func (c *Configuration) ReadToStruct(key string, result interface{}, opts ...Option)error{
 	// 先套用 options
 	var options = Options{}
