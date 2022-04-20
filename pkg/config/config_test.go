@@ -51,3 +51,31 @@ func TestWatcher(t *testing.T){
 		}
 		fmt.Println(<-result)
 }
+
+
+func TestLoadToStruct(t *testing.T){
+	conf := New()
+	content2 :=`
+[CodeName]
+User = "Daniel"
+OwnAnimal = "cat"
+Number = 1
+BoolFlag = true`
+	if err := conf.LoadFromReader(bytes.NewBufferString(content2), toml.Unmarshal); err != nil{
+		panic(err)
+	}
+	fmt.Println(conf.Get("CodeName.OwnAnimal"))
+
+	type CodeName struct {
+		User 		string
+		OwnAnimal 	string
+		Number		int64
+		BoolFlag	bool
+	}
+
+	var codename CodeName
+
+	conf.ReadToStruct("CodeName",&codename)
+	fmt.Println(codename.BoolFlag)
+
+}
