@@ -14,11 +14,11 @@
     * orm
     * redis
     * mongodb
-5. 熱加載 config
+5. 熱加載 config 
 6. corn job 任務
 7. queue(rocketMQ)
-8. 日誌
-9. 異步任務池
+8. 日誌 (已完成 2022-04-20)
+9. 異步任務池 (已完成  2022-04-19)
 10. 事件總線（這個不清楚，再研究
 11. Prometheus/pprof 監控
 12. 優雅重啟

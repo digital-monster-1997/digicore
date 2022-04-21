@@ -210,7 +210,6 @@ func (logger *Logger) Fatalw(msg string, keysAndValues ...interface{}) {
 	}
 	logger.sugar.Fatalw(msg, keysAndValues...)
 }
-
 func panicDetail(msg string, fields ...Field) {
 	enc := zapcore.NewMapObjectEncoder()
 	for _, field := range fields {
