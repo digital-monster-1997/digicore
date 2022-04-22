@@ -128,6 +128,15 @@ func (client *Client) GetKeyValue(ctx context.Context, key string) (kv *mvccpb.K
 	return
 }
 
+// UpdateValue 更新 value
+func (client *Client) UpdateValue(ctx context.Context, key, value string) error {
+	_, err := client.Put(ctx, key ,value)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // DelPrefix 按前缀删除
 func (client *Client) DelPrefix(ctx context.Context, prefix string) (deleted int64, err error) {
 	resp, err := client.Delete(ctx, prefix, clientv3.WithPrefix())
